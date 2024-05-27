@@ -15,6 +15,7 @@ Projeto de uma locadora de veículos desenvolvido em Java.
 ## Configuração do Ambiente
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/IDrive.git
+   git clone https://github.com/arenitoo/IDrive.git
    ou
+   git@github.com:arenitoo/IDrive.git 
    
