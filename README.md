@@ -1,6 +1,4 @@
 # IDrive
-Uma corretora de veículos desenvolvida em java
-
 ## Descrição
 Projeto de uma locadora de veículos desenvolvido em Java.
 
