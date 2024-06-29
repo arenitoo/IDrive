@@ -1,90 +1,106 @@
 package com.idrive.daos;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import com.idrive.models.Cliente;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.idrive.conf.Conexao;
+
 
 public class clienteDAO {
 
-    private Connection connection;
+    private Conexao conexao;
+    private PreparedStatement ps;
 
-    public clienteDAO(Connection connection) {
-        this.connection = connection;
+    public clienteDAO(){
+        conexao = new Conexao();
     }
 
-    // Adiciona um novo cliente no banco de dados
-    public void addCliente(Cliente cliente) throws SQLException {
-        String sql = "INSERT INTO clientes (id, nome, cpf, telefone, endereco) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, cliente.getId());
-            stmt.setString(2, cliente.getNome());
-            stmt.setString(3, cliente.getCpf());
-            stmt.setString(4, cliente.getTelefone());
-            stmt.setString(5, cliente.getEndereco());
-            stmt.executeUpdate();
+    public ResultSet listar(){
+        try {
+            return conexao.getConn()
+                    .createStatement().executeQuery("SELECT * FROM cliente");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public void inserir(Cliente cliente){
+        try {
+            String SQL = "INSERT INTO cliente(nome, cpf, telefone, endereco) " +
+                    "VALUES (?, ?, ?, ?)";
+
+            ps = conexao.getConn().prepareStatement(SQL);
+
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getCpf());
+            ps.setString(3, cliente.getTelefone());
+            ps.setString(4, cliente.getEndereco());
+
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
-    // Obtém um cliente pelo ID
-    public Cliente getCliente(int id) throws SQLException {
-        String sql = "SELECT * FROM clientes WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Cliente(
-                            rs.getInt("id"),
-                            rs.getString("nome"),
-                            rs.getString("cpf"),
-                            rs.getString("telefone"),
-                            rs.getString("endereco")
-                    );
-                }
-            }
-        }
-        return null; // Retorna null se o cliente não for encontrado
-    }
+    public void excluir(Cliente cliente){
+        try {
+            String SQL = "DELETE FROM cliente WHERE id = ?";
 
-    // Obtém todos os clientes
-    public List<Cliente> getAllClientes() throws SQLException {
-        String sql = "SELECT * FROM clientes";
-        List<Cliente> clientes = new ArrayList<>();
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                Cliente cliente = new Cliente(
-                        rs.getInt("id"),
-                        rs.getString("nome"),
-                        rs.getString("cpf"),
-                        rs.getString("telefone"),
-                        rs.getString("endereco")
-                );
-                clientes.add(cliente);
-            }
-        }
-        return clientes;
-    }
+            ps = conexao.getConn().prepareStatement(SQL);
 
+            ps.setInt(1, cliente.getId());
 
-    public void updateCliente(Cliente cliente) throws SQLException {
-        String sql = "UPDATE clientes SET nome = ?, cpf = ?, telefone = ?, endereco = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, cliente.getNome());
-            stmt.setString(2, cliente.getCpf());
-            stmt.setString(3, cliente.getTelefone());
-            stmt.setString(4, cliente.getEndereco());
-            stmt.setInt(5, cliente.getId());
-            stmt.executeUpdate();
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
+    public void editar(Cliente cliente){
+        try {
+            String SQL = "UPDATE cliente SET " +
+                    "nome= ?, cpf= ?, telefone= ?, endereco= ? " +
+                    "WHERE id=?";
 
-    public void deleteCliente(int id) throws SQLException {
-        String sql = "DELETE FROM clientes WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
+            ps = conexao.getConn().prepareStatement(SQL);
+
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getCpf());
+            ps.setString(3, cliente.getTelefone());
+            ps.setString(4, cliente.getEndereco());
+            ps.setInt(5, cliente.getId());
+
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
+
+    public ResultSet mostrarDadosCliente(Cliente cliente) {
+        try {
+            String SQL = "SELECT * FROM cliente WHERE id = ?";
+
+            ps = conexao.getConn().prepareStatement(SQL);
+            ps.setInt(1, cliente.getId());
+
+            ResultSet rs = ps.executeQuery();
+
+            ps.close();
+
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

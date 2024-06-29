@@ -17,6 +17,10 @@ public class Veiculo {
         this.disponibilidade = disponibilidade;
     }
 
+    public Veiculo() {
+
+    }
+
     public int getId() {
         return id;
     }

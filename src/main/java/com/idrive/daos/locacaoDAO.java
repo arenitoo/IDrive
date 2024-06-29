@@ -1,110 +1,105 @@
 package com.idrive.daos;
 
-import com.idrive.models.Cliente;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Date;
 import com.idrive.models.Locacao;
-import com.idrive.models.Veiculo;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.idrive.conf.Conexao;
 
 public class locacaoDAO {
 
-    private Connection connection;
+    private Conexao conexao;
+    private PreparedStatement ps;
 
-    public locacaoDAO(Connection connection) {
-        this.connection = connection;
+    public locacaoDAO(){
+        conexao = new Conexao();
     }
 
-    public void addLocacao(Locacao locacao) throws SQLException {
-        String sql = "INSERT INTO locacoes (id, cliente_id, veiculo_id, data_inicio, data_termino, valor_diaria, valor_total) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, locacao.getId());
-            stmt.setInt(2, locacao.getCliente().getId());
-            stmt.setInt(3, locacao.getVeiculo().getId());
-            stmt.setDate(4, new java.sql.Date(locacao.getDataInicio().getTime()));
-            stmt.setDate(5, new java.sql.Date(locacao.getDataTermino().getTime()));
-            stmt.setDouble(6, locacao.getValorDiaria());
-            stmt.setDouble(7, locacao.getValorTotal());
-            stmt.executeUpdate();
+    public ResultSet listar(){
+        try {
+            return conexao.getConn()
+                    .createStatement().executeQuery("SELECT * FROM locacao");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    }
-
-    public Locacao getLocacao(int id) throws SQLException {
-        String sql = "SELECT * FROM locacoes WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    Cliente cliente = getClienteById(rs.getInt("cliente_id"));
-                    Veiculo veiculo = getVeiculoById(rs.getInt("veiculo_id"));
-                    return new Locacao(
-                            rs.getInt("id"),
-                            cliente,
-                            veiculo,
-                            rs.getDate("data_inicio"),
-                            rs.getDate("data_termino"),
-                            rs.getDouble("valor_diaria"),
-                            rs.getDouble("valor_total")
-                    );
-                }
-            }
-        }
-        return null;
-    }
-
-    public List<Locacao> getAllLocacoes() throws SQLException {
-        String sql = "SELECT * FROM locacoes";
-        List<Locacao> locacoes = new ArrayList<>();
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                Cliente cliente = getClienteById(rs.getInt("cliente_id"));
-                Veiculo veiculo = getVeiculoById(rs.getInt("veiculo_id"));
-                Locacao locacao = new Locacao(
-                        rs.getInt("id"),
-                        cliente,
-                        veiculo,
-                        rs.getDate("data_inicio"),
-                        rs.getDate("data_termino"),
-                        rs.getDouble("valor_diaria"),
-                        rs.getDouble("valor_total")
-                );
-                locacoes.add(locacao);
-            }
-        }
-        return locacoes;
-    }
-
-    public void updateLocacao(Locacao locacao) throws SQLException {
-        String sql = "UPDATE locacoes SET cliente_id = ?, veiculo_id = ?, data_inicio = ?, data_termino = ?, valor_diaria = ?, valor_total = ? WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, locacao.getCliente().getId());
-            stmt.setInt(2, locacao.getVeiculo().getId());
-            stmt.setDate(3, new java.sql.Date(locacao.getDataInicio().getTime()));
-            stmt.setDate(4, new java.sql.Date(locacao.getDataTermino().getTime()));
-            stmt.setDouble(5, locacao.getValorDiaria());
-            stmt.setDouble(6, locacao.getValorTotal());
-            stmt.setInt(7, locacao.getId());
-            stmt.executeUpdate();
-        }
-    }
-
-    public void deleteLocacao(int id) throws SQLException {
-        String sql = "DELETE FROM locacoes WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        }
-    }
-
-    private Cliente getClienteById(int clienteId) throws SQLException {
 
         return null;
     }
 
-    private Veiculo getVeiculoById(int veiculoId) throws SQLException {
+    public void inserir(Locacao locacao){
+        try {
+            String SQL = "INSERT INTO locacao(id_cliente, id_veiculo, data_inicio, data_termino, valor_diaria, valor_total) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
+            ps = conexao.getConn().prepareStatement(SQL);
+
+            ps.setInt(1, locacao.getCliente().getId());
+            ps.setInt(2, locacao.getVeiculo().getId());
+            ps.setDate(3, new Date(locacao.getDataInicio().getTime()));
+            ps.setDate(4, new Date(locacao.getDataTermino().getTime()));
+            ps.setDouble(5, locacao.getValorDiaria());
+            ps.setDouble(6, locacao.getValorTotal());
+
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void excluir(Locacao locacao){
+        try {
+            String SQL = "DELETE FROM locacao WHERE id = ?";
+
+            ps = conexao.getConn().prepareStatement(SQL);
+
+            ps.setInt(1, locacao.getId());
+
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void editar(Locacao locacao){
+        try {
+            String SQL = "UPDATE locacao SET " +
+                    "id_cliente = ?, id_veiculo = ?, data_inicio = ?, data_termino = ?, valor_diaria = ?, valor_total = ? " +
+                    "WHERE id = ?";
+
+            ps = conexao.getConn().prepareStatement(SQL);
+
+            ps.setInt(1, locacao.getCliente().getId());
+            ps.setInt(2, locacao.getVeiculo().getId());
+            ps.setDate(3, new Date(locacao.getDataInicio().getTime()));
+            ps.setDate(4, new Date(locacao.getDataTermino().getTime()));
+            ps.setDouble(5, locacao.getValorDiaria());
+            ps.setDouble(6, locacao.getValorTotal());
+            ps.setInt(7, locacao.getId());
+
+            ps.executeUpdate();
+
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public ResultSet getClienteByLocacao(int locacaoId) {
+        try {
+            String SQL = "SELECT cliente.* FROM cliente JOIN locacao ON cliente.id = locacao.id_cliente WHERE locacao.id = ?";
+
+            ps = conexao.getConn().prepareStatement(SQL);
+            ps.setInt(1, locacaoId);
+
+            return ps.executeQuery();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         return null;
     }
+
 }

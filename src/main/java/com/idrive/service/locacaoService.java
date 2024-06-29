@@ -1,39 +1,45 @@
 package com.idrive.service;
 
-import com.idrive.daos.clienteDAO;
-import com.idrive.models.Cliente;
-
 import com.idrive.daos.locacaoDAO;
 import com.idrive.models.Locacao;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.sql.ResultSet;
 
 public class locacaoService {
 
-    private locacaoDAO daoLocacao;
+    private locacaoDAO locacaoDao;
 
-    public locacaoService(locacaoDAO daoLocacao) {
-        this.daoLocacao = daoLocacao;
+    public locacaoService() {
+        locacaoDao = new locacaoDAO();
     }
 
-    public void addLocacao(Locacao locacao) throws SQLException {
-        daoLocacao.addLocacao(locacao);
+    public void inserir(Locacao locacao) {
+        if (locacao.getCliente() == null || locacao.getVeiculo() == null) {
+            return;
+        }
+        locacaoDao.inserir(locacao);
+
     }
 
-    public Locacao getLocacao(int id) throws SQLException {
-        return daoLocacao.getLocacao(id);
+    public void excluir(Locacao locacao) {
+        if (locacao.getId() == 0) {
+            return;
+        }
+        locacaoDao.excluir(locacao);
+
     }
 
-    public List<Locacao> getAllLocacoes() throws SQLException {
-        return daoLocacao.getAllLocacoes();
-    }
+    public void editar(Locacao locacao) {
+        if (locacao.getCliente() == null || locacao.getVeiculo() == null) {
+            return;
+        }
+        locacaoDao.editar(locacao);
 
-    public void updateLocacao(Locacao locacao) throws SQLException {
-        daoLocacao.updateLocacao(locacao);
     }
-
-    public void deleteLocacao(int id) throws SQLException {
-        daoLocacao.deleteLocacao(id);
+    public ResultSet getClienteByLocacao(int locacaoId) {
+        if (locacaoId <= 0) {
+            throw new IllegalArgumentException();
+        }
+        return locacaoDao.getClienteByLocacao(locacaoId);
     }
 }

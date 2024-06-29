@@ -1,35 +1,54 @@
 package com.idrive.service;
 
+import java.sql.ResultSet;
+
 import com.idrive.daos.veiculoDAO;
 import com.idrive.models.Veiculo;
-import java.sql.SQLException;
-import java.util.List;
 
 public class veiculoService {
 
-    private veiculoDAO daoVeiculo;
+    private veiculoDAO veiculoDao;
 
-    public veiculoService(veiculoDAO daoVeiculo) {
-        this.daoVeiculo = daoVeiculo;
+    public veiculoService() {
+        veiculoDao = new veiculoDAO();
     }
 
-    public void addVeiculo(Veiculo veiculo) throws SQLException {
-        daoVeiculo.addVeiculo(veiculo);
+    public void inserir(Veiculo veiculo) {
+        if (veiculo.getMarca().isEmpty() || veiculo.getModelo().isEmpty() || veiculo.getPlaca().isEmpty()) {
+            return;
+        }
+        veiculoDao.inserir(veiculo);
+
     }
 
-    public Veiculo getVeiculo(int id) throws SQLException {
-        return daoVeiculo.getVeiculo(id);
+    public void excluir(Veiculo veiculo) {
+        if (veiculo.getId() == 0) {
+            return;
+        }
+        veiculoDao.excluir(veiculo);
+
     }
 
-    public List<Veiculo> getAllVeiculos() throws SQLException {
-        return daoVeiculo.getAllVeiculos();
+    public void editar(Veiculo veiculo) {
+        if (veiculo.getMarca().isEmpty() || veiculo.getModelo().isEmpty() || veiculo.getPlaca().isEmpty()) {
+            return;
+        }
+        veiculoDao.editar(veiculo);
+
     }
 
-    public void updateVeiculo(Veiculo veiculo) throws SQLException {
-        daoVeiculo.updateVeiculo(veiculo);
+    public ResultSet quantidadeVeiculoPorMarca(Veiculo veiculo) {
+        if (veiculo.getMarca().isEmpty()) {
+            return null;
+        }
+        veiculoDao.quantidadeVeiculoPorMarca(veiculo);
+        return null;
     }
 
-    public void deleteVeiculo(int id) throws SQLException {
-        daoVeiculo.deleteVeiculo(id);
+    public boolean isDisponivel(int veiculoId, java.util.Date dataInicio, java.util.Date dataTermino){
+        if (veiculoId <= 0) {
+            throw new IllegalArgumentException();
+        }
+        return veiculoDao.isDisponivel(veiculoId, dataInicio, dataTermino);
     }
 }
