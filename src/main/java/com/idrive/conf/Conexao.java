@@ -18,7 +18,7 @@ public class Conexao {
             System.out.println("Conexão criada com sucesso!");
         }
         catch ( ClassNotFoundException | SQLException e ){
-            System.out.println("Falha na conexão");
+            System.out.println("Falha na conexão.");
             e.printStackTrace();
         }
     }
