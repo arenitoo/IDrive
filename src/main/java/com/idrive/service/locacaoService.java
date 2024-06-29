@@ -1,16 +1,16 @@
 package com.idrive.service;
 
-import com.idrive.daos.locacaoDAO;
+import com.idrive.daos.LocacaoDAO;
 import com.idrive.models.Locacao;
 
 import java.sql.ResultSet;
 
-public class locacaoService {
+public class LocacaoService {
 
-    private locacaoDAO locacaoDao;
+    private LocacaoDAO locacaoDao;
 
-    public locacaoService() {
-        locacaoDao = new locacaoDAO();
+    public LocacaoService() {
+        locacaoDao = new LocacaoDAO();
     }
 
     public void inserir(Locacao locacao) {

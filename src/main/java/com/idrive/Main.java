@@ -1,20 +1,18 @@
 package com.idrive;
 
-import com.idrive.models.Cliente;
-import com.idrive.models.Locacao;
 import com.idrive.models.Veiculo;
-import com.idrive.service.clienteService;
-import com.idrive.service.locacaoService;
-import com.idrive.service.veiculoService;
+import com.idrive.service.ClienteService;
+import com.idrive.service.LocacaoService;
+import com.idrive.service.VeiculoService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-    private static clienteService clienteService = new clienteService();
-    private static locacaoService locacaoService = new locacaoService();
-    private static veiculoService veiculoService = new veiculoService();
+    private static ClienteService clienteService = new ClienteService();
+    private static LocacaoService locacaoService = new LocacaoService();
+    private static VeiculoService veiculoService = new VeiculoService();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

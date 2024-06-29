@@ -7,12 +7,12 @@ import com.idrive.models.Cliente;
 import com.idrive.conf.Conexao;
 
 
-public class clienteDAO {
+public class ClienteDAO {
 
     private Conexao conexao;
     private PreparedStatement ps;
 
-    public clienteDAO(){
+    public ClienteDAO(){
         conexao = new Conexao();
     }
 

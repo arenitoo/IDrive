@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import com.idrive.models.Veiculo;
 import com.idrive.conf.Conexao;
 
-public class veiculoDAO {
+public class VeiculoDAO {
 
     private Conexao conexao;
     private PreparedStatement ps;
 
-    public veiculoDAO(){
+    public VeiculoDAO(){
         conexao = new Conexao();
     }
 

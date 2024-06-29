@@ -1,14 +1,19 @@
 package com.idrive.service;
 
-import com.idrive.daos.clienteDAO;
+import com.idrive.daos.ClienteDAO;
 import com.idrive.models.Cliente;
 
-public class clienteService {
+public class ClienteService {
 
-    private clienteDAO clienteDao;
+    private ClienteDAO clienteDao;
 
-    public clienteService() {
-        clienteDao = new clienteDAO();
+    public ClienteService() {
+        clienteDao = new ClienteDAO();
+    }
+    
+     // Método setter para injetar o mock do ClienteDao
+    public void setClienteDAO(ClienteDAO clienteDao) {
+        this.clienteDao = clienteDao;
     }
 
     public void inserir(Cliente cliente) {

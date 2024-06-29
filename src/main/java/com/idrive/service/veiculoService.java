@@ -2,15 +2,15 @@ package com.idrive.service;
 
 import java.sql.ResultSet;
 
-import com.idrive.daos.veiculoDAO;
+import com.idrive.daos.VeiculoDAO;
 import com.idrive.models.Veiculo;
 
-public class veiculoService {
+public class VeiculoService {
 
-    private veiculoDAO veiculoDao;
+    private VeiculoDAO veiculoDao;
 
-    public veiculoService() {
-        veiculoDao = new veiculoDAO();
+    public VeiculoService() {
+        veiculoDao = new VeiculoDAO();
     }
 
     public void inserir(Veiculo veiculo) {
