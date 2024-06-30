@@ -13,6 +13,7 @@ public class ClienteServiceTest {
     
     private ClienteService clienteService;
     private ClienteDAO mockClienteDao;
+    private Cliente cliente;
     
     public ClienteServiceTest() {
     }
@@ -22,6 +23,8 @@ public class ClienteServiceTest {
         mockClienteDao = mock(ClienteDAO.class);
         clienteService = new ClienteService();
         clienteService.setClienteDAO(mockClienteDao); // Injetando o mock
+        cliente = new Cliente(1,"MATHEUS EDUARDO", "123.456.789.-10", "9876-5432", "Rua ABC");
+
     }     
 
     /**
@@ -29,8 +32,6 @@ public class ClienteServiceTest {
      */
     @Test
     public void testInserirCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setId(999999);
         // Simulate behavior of ClienteDao.inserir(cliente)
         doNothing().when(mockClienteDao).inserir(cliente);
         clienteService.inserir(cliente);
@@ -43,8 +44,6 @@ public class ClienteServiceTest {
      */
     @Test
     public void testExcluirCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setId(1);
         // Simulate behavior of ClienteDao.excluir(cliente)
         doNothing().when(mockClienteDao).excluir(cliente);
         clienteService.excluir(cliente);
@@ -57,7 +56,6 @@ public class ClienteServiceTest {
      */
     @Test
     public void testEditarCliente() {
-        Cliente cliente = new Cliente(2,"Maria", "98765432100", "9876-5432", "Rua B");
         // Simulate behavior of ClienteDao.editar(cliente)
         doNothing().when(mockClienteDao).editar(cliente);
         clienteService.editar(cliente);
@@ -70,7 +68,6 @@ public class ClienteServiceTest {
      */
     @Test
     public void testMostrarCliente() {
-        Cliente cliente = new Cliente(3,"José", "54612378955", "1546-5432", "Rua C");
         // Simulate behavior of ClienteDao.mostrarDadosCliente(cliente)
         when(mockClienteDao.mostrarDadosCliente(cliente)).thenReturn(null);
         clienteService.mostrarCliente(cliente);
