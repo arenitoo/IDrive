@@ -12,6 +12,11 @@ public class VeiculoService {
     public VeiculoService() {
         veiculoDao = new VeiculoDAO();
     }
+    
+         // Método setter para injetar o mock do VeiculoDao
+    public void setVeiculoDAO(VeiculoDAO veiculoDao) {
+        this.veiculoDao = veiculoDao;
+    }
 
     public void inserir(Veiculo veiculo) {
         if (veiculo.getMarca().isEmpty() || veiculo.getModelo().isEmpty() || veiculo.getPlaca().isEmpty()) {
@@ -45,10 +50,10 @@ public class VeiculoService {
         return null;
     }
 
-    public boolean isDisponivel(int veiculoId, java.util.Date dataInicio, java.util.Date dataTermino){
+    public boolean isDisponivel(int veiculoId){
         if (veiculoId <= 0) {
             throw new IllegalArgumentException();
         }
-        return veiculoDao.isDisponivel(veiculoId, dataInicio, dataTermino);
+        return veiculoDao.isDisponivel(veiculoId);
     }
 }

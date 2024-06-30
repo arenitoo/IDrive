@@ -12,6 +12,11 @@ public class LocacaoService {
     public LocacaoService() {
         locacaoDao = new LocacaoDAO();
     }
+    
+    // Método setter para injetar o mock do LocacaoDao
+    public void setLocacaoDao(LocacaoDAO locacaoDAO) {
+        this.locacaoDao = locacaoDAO;
+    }
 
     public void inserir(Locacao locacao) {
         if (locacao.getCliente() == null || locacao.getVeiculo() == null) {

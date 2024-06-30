@@ -2,10 +2,7 @@ package com.idrive.service;
 
 import com.idrive.daos.ClienteDAO;
 import com.idrive.models.Cliente;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 /**
@@ -19,33 +16,21 @@ public class ClienteServiceTest {
     
     public ClienteServiceTest() {
     }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
+        
     @BeforeEach
     public void setUp() {
         mockClienteDao = mock(ClienteDAO.class);
         clienteService = new ClienteService();
         clienteService.setClienteDAO(mockClienteDao); // Injetando o mock
-    }
-    
-    @AfterEach
-    public void tearDown() {
-    }
-       
+    }     
 
     /**
      * Test of inserir method, of class ClienteService.
      */
     @Test
     public void testInserirCliente() {
-        Cliente cliente = new Cliente(99999999, "João", "12345678900", "1234-5678", "Rua A");
+        Cliente cliente = new Cliente();
+        cliente.setId(999999);
         // Simulate behavior of ClienteDao.inserir(cliente)
         doNothing().when(mockClienteDao).inserir(cliente);
         clienteService.inserir(cliente);
@@ -58,7 +43,8 @@ public class ClienteServiceTest {
      */
     @Test
     public void testExcluirCliente() {
-        Cliente cliente = new Cliente(1, "Marcos", "21354687900", "1234-7894", "Rua B");
+        Cliente cliente = new Cliente();
+        cliente.setId(1);
         // Simulate behavior of ClienteDao.excluir(cliente)
         doNothing().when(mockClienteDao).excluir(cliente);
         clienteService.excluir(cliente);

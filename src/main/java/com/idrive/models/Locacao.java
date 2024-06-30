@@ -21,6 +21,10 @@ public class Locacao {
         this.valorTotal = valorTotal;
     }
 
+    public Locacao() {
+        
+    }
+    
     public int getId() {
         return id;
     }

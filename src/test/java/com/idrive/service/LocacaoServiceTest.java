@@ -4,14 +4,16 @@
  */
 package com.idrive.service;
 
+import com.idrive.daos.LocacaoDAO;
 import com.idrive.models.Locacao;
+import com.idrive.models.Cliente;
+import com.idrive.models.Veiculo;
 import java.sql.ResultSet;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
+import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  *
@@ -19,62 +21,66 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class LocacaoServiceTest {
     
+    private LocacaoService locacaoService;
+    private LocacaoDAO mockLocacaoDao;
+    
     public LocacaoServiceTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
     }
     
     @BeforeEach
     public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+        mockLocacaoDao = mock(LocacaoDAO.class);
+        locacaoService = new LocacaoService();
+        locacaoService.setLocacaoDao(mockLocacaoDao); // Injetando o mock
     }
 
     /**
      * Test of inserir method, of class locacaoService.
      */
     @Test
-    public void testInserir() {
-        System.out.println("inserir");
-        Locacao locacao = null;
-        locacaoService instance = new locacaoService();
-        instance.inserir(locacao);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testInserirLocacao() {
+        Cliente cliente = new Cliente();
+        Veiculo veiculo = new Veiculo();
+        Date dataInicio = new Date();
+        Date dataTermino = new Date(dataInicio.getTime() + (1000 * 60 * 60 * 24));
+        Locacao locacao = new Locacao(999999 ,cliente, veiculo, dataInicio, dataTermino, 100.0, 200.0);
+        // Simulate behavior of LocacaoDao.inserir(locacao)
+        doNothing().when(mockLocacaoDao).inserir(locacao);
+        locacaoService.inserir(locacao);
+        // Verify that LocacaoDao.inserir(locacao) was called exactly once
+        verify(mockLocacaoDao, times(1)).inserir(locacao);
     }
 
     /**
      * Test of excluir method, of class locacaoService.
      */
     @Test
-    public void testExcluir() {
-        System.out.println("excluir");
-        Locacao locacao = null;
-        locacaoService instance = new locacaoService();
-        instance.excluir(locacao);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testExcluirLocacao() {
+        Locacao locacao = new Locacao();
+        locacao.setId(1);
+        // Simulate behavior of LocacaoDao.excluir(locacao)
+        doNothing().when(mockLocacaoDao).excluir(locacao);
+        locacaoService.excluir(locacao);
+        // Verify that LocacaoDao.excluir(locacao) was called exactly once
+        verify(mockLocacaoDao, times(1)).excluir(locacao);
     }
 
     /**
      * Test of editar method, of class locacaoService.
      */
     @Test
-    public void testEditar() {
-        System.out.println("editar");
-        Locacao locacao = null;
-        locacaoService instance = new locacaoService();
-        instance.editar(locacao);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testEditarLocacao() {
+        Cliente cliente = new Cliente();
+        Veiculo veiculo = new Veiculo();
+        Date dataInicio = new Date();
+        Date dataTermino = new Date(dataInicio.getTime() + (1000 * 60 * 60 * 24));
+        Locacao locacao = new Locacao(999999 ,cliente, veiculo, dataInicio, dataTermino, 100.0, 200.0);
+        locacao.setId(2);
+        // Simulate behavior of LocacaoDao.editar(locacao)
+        doNothing().when(mockLocacaoDao).editar(locacao);
+        locacaoService.editar(locacao);
+        // Verify that LocacaoDao.editar(locacao) was called exactly once
+        verify(mockLocacaoDao, times(1)).editar(locacao);
     }
 
     /**
@@ -82,14 +88,15 @@ public class LocacaoServiceTest {
      */
     @Test
     public void testGetClienteByLocacao() {
-        System.out.println("getClienteByLocacao");
-        int locacaoId = 0;
-        locacaoService instance = new locacaoService();
-        ResultSet expResult = null;
-        ResultSet result = instance.getClienteByLocacao(locacaoId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int locacaoId = 1;
+        ResultSet mockResultSet = mock(ResultSet.class);
+        // Simulate behavior of LocacaoDao.getClienteByLocacao(locacaoId)
+        when(mockLocacaoDao.getClienteByLocacao(locacaoId)).thenReturn(mockResultSet);
+        ResultSet result = locacaoService.getClienteByLocacao(locacaoId);
+        // Verify that LocacaoDao.getClienteByLocacao(locacaoId) was called exactly once
+        verify(mockLocacaoDao, times(1)).getClienteByLocacao(locacaoId);
+        // Verify the result is as expected
+        assertEquals(mockResultSet, result);
     }
     
 }

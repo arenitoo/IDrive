@@ -100,7 +100,7 @@ public class Main {
         String dataTerminoStr = scanner.nextLine();
         java.util.Date dataTermino = java.sql.Date.valueOf(dataTerminoStr);
 
-        boolean disponivel = veiculoService.isDisponivel(veiculoId, dataInicio, dataTermino);
+        boolean disponivel = veiculoService.isDisponivel(veiculoId);
 
         if (disponivel) {
             System.out.println("O veículo está disponível para locação.");

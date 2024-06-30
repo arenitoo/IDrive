@@ -104,16 +104,12 @@ public class VeiculoDAO {
         return null;
     }
 
-    public boolean isDisponivel(int veiculoId, java.util.Date dataInicio, java.util.Date dataTermino) {
+    public boolean isDisponivel(int veiculoId) {
         try {
-            String SQL = "SELECT COUNT(*) FROM locacao WHERE id_veiculo = ? AND (data_inicio BETWEEN ? AND ? OR data_termino BETWEEN ? AND ?)";
+            String SQL = "SELECT COUNT(*) FROM locacao WHERE id_veiculo = ?";
 
             ps = conexao.getConn().prepareStatement(SQL);
             ps.setInt(1, veiculoId);
-            ps.setDate(2, new java.sql.Date(dataInicio.getTime()));
-            ps.setDate(3, new java.sql.Date(dataTermino.getTime()));
-            ps.setDate(4, new java.sql.Date(dataInicio.getTime()));
-            ps.setDate(5, new java.sql.Date(dataTermino.getTime()));
 
             ResultSet rs = ps.executeQuery();
             rs.next();
