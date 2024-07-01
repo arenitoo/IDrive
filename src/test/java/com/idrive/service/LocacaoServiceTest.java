@@ -23,6 +23,9 @@ public class LocacaoServiceTest {
     
     private LocacaoService locacaoService;
     private LocacaoDAO mockLocacaoDao;
+    private Cliente cliente;
+    private Veiculo veiculo;
+    private Locacao locacao;
     
     public LocacaoServiceTest() {
     }
@@ -32,6 +35,10 @@ public class LocacaoServiceTest {
         mockLocacaoDao = mock(LocacaoDAO.class);
         locacaoService = new LocacaoService();
         locacaoService.setLocacaoDao(mockLocacaoDao); // Injetando o mock
+        cliente = new Cliente(1,"MATHEUS EDUARDO", "123.456.789.-10", "9876-5432", "Rua ABC");
+        veiculo = new Veiculo(1, "Toyota", "Corolla", 2022, "ABC1234", true);
+        locacao = new Locacao(1, cliente, veiculo, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000L), 100.0, 200.0);
+
     }
 
     /**
@@ -39,11 +46,6 @@ public class LocacaoServiceTest {
      */
     @Test
     public void testInserirLocacao() {
-        Cliente cliente = new Cliente();
-        Veiculo veiculo = new Veiculo();
-        Date dataInicio = new Date();
-        Date dataTermino = new Date(dataInicio.getTime() + (1000 * 60 * 60 * 24));
-        Locacao locacao = new Locacao(999999 ,cliente, veiculo, dataInicio, dataTermino, 100.0, 200.0);
         // Simulate behavior of LocacaoDao.inserir(locacao)
         doNothing().when(mockLocacaoDao).inserir(locacao);
         locacaoService.inserir(locacao);
@@ -56,8 +58,6 @@ public class LocacaoServiceTest {
      */
     @Test
     public void testExcluirLocacao() {
-        Locacao locacao = new Locacao();
-        locacao.setId(1);
         // Simulate behavior of LocacaoDao.excluir(locacao)
         doNothing().when(mockLocacaoDao).excluir(locacao);
         locacaoService.excluir(locacao);
@@ -70,12 +70,6 @@ public class LocacaoServiceTest {
      */
     @Test
     public void testEditarLocacao() {
-        Cliente cliente = new Cliente();
-        Veiculo veiculo = new Veiculo();
-        Date dataInicio = new Date();
-        Date dataTermino = new Date(dataInicio.getTime() + (1000 * 60 * 60 * 24));
-        Locacao locacao = new Locacao(999999 ,cliente, veiculo, dataInicio, dataTermino, 100.0, 200.0);
-        locacao.setId(2);
         // Simulate behavior of LocacaoDao.editar(locacao)
         doNothing().when(mockLocacaoDao).editar(locacao);
         locacaoService.editar(locacao);
@@ -88,13 +82,12 @@ public class LocacaoServiceTest {
      */
     @Test
     public void testGetClienteByLocacao() {
-        int locacaoId = 1;
         ResultSet mockResultSet = mock(ResultSet.class);
         // Simulate behavior of LocacaoDao.getClienteByLocacao(locacaoId)
-        when(mockLocacaoDao.getClienteByLocacao(locacaoId)).thenReturn(mockResultSet);
-        ResultSet result = locacaoService.getClienteByLocacao(locacaoId);
+        when(mockLocacaoDao.getClienteByLocacao(locacao.getId())).thenReturn(mockResultSet);
+        ResultSet result = locacaoService.getClienteByLocacao(locacao.getId());
         // Verify that LocacaoDao.getClienteByLocacao(locacaoId) was called exactly once
-        verify(mockLocacaoDao, times(1)).getClienteByLocacao(locacaoId);
+        verify(mockLocacaoDao, times(1)).getClienteByLocacao(locacao.getId());
         // Verify the result is as expected
         assertEquals(mockResultSet, result);
     }
