@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.idrive.models.Veiculo;
 import com.idrive.conf.Conexao;
+import java.util.Date;
 
 public class VeiculoDAO {
 
@@ -104,10 +105,15 @@ public class VeiculoDAO {
         return null;
     }
 
-    public boolean isDisponivel(int veiculoId) {
+    public boolean isDisponivel(int veiculoId, Date dataInicio, Date dataFim) {
         try {
-            String SQL = "SELECT COUNT(*) FROM locacao WHERE id_veiculo = ? AND NOW() BETWEEN dataInicio AND dataTermino";
-
+            String SQL = "SELECT COUNT(*) FROM locacao " +
+                                 "WHERE id_veiculo = ? " +
+                                 "AND ((" +
+                                 "      ? BETWEEN data_inicio AND data_termino" +
+                                 "  ) OR (" +
+                                 "      ? BETWEEN data_inicio AND data_termino" +
+                                 "  ))";
             ps = conexao.getConn().prepareStatement(SQL);
             ps.setInt(1, veiculoId);
 

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 
 import com.idrive.daos.VeiculoDAO;
 import com.idrive.models.Veiculo;
+import java.util.Date;
 
 public class VeiculoService {
 
@@ -50,10 +51,10 @@ public class VeiculoService {
         return null;
     }
 
-    public boolean isDisponivel(int veiculoId){
+    public boolean isDisponivel(int veiculoId, Date dataInicio, Date dataFim){
         if (veiculoId <= 0) {
             throw new IllegalArgumentException();
         }
-        return veiculoDao.isDisponivel(veiculoId);
+        return veiculoDao.isDisponivel(veiculoId, dataInicio, dataFim);
     }
 }

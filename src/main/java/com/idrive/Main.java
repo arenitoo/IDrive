@@ -98,9 +98,9 @@ public class Main {
 
         System.out.println("Informe a data de término (yyyy-MM-dd):");
         String dataTerminoStr = scanner.nextLine();
-        java.util.Date dataTermino = java.sql.Date.valueOf(dataTerminoStr);
+        java.util.Date dataFim = java.sql.Date.valueOf(dataTerminoStr);
 
-        boolean disponivel = veiculoService.isDisponivel(veiculoId);
+        boolean disponivel = veiculoService.isDisponivel(veiculoId, dataInicio, dataFim);
 
         if (disponivel) {
             System.out.println("O veículo está disponível para locação.");
