@@ -8,7 +8,6 @@ import com.idrive.daos.VeiculoDAO;
 import com.idrive.models.Veiculo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +21,7 @@ public class VeiculoServiceTest {
     
     private VeiculoService veiculoService;
     private VeiculoDAO mockVeiculoDao;
+    private Veiculo veiculo;
     
     public VeiculoServiceTest() {
     }
@@ -31,6 +31,8 @@ public class VeiculoServiceTest {
         mockVeiculoDao = mock(VeiculoDAO.class);
         veiculoService = new VeiculoService();
         veiculoService.setVeiculoDAO(mockVeiculoDao);
+        veiculo = new Veiculo(1, "Toyota", "Corolla", 2022, "ABC1234", true);
+
     }
     
     /**
@@ -38,7 +40,6 @@ public class VeiculoServiceTest {
      */
     @Test
     public void testInserirVeiculo() {
-        Veiculo veiculo = new Veiculo(99999999, "Toyota", "Corolla", 2022, "ABC1234", true);
         // Simulate behavior of VeiculoDao.inserir(veiculo)
         doNothing().when(mockVeiculoDao).inserir(veiculo);
         veiculoService.inserir(veiculo);
@@ -51,8 +52,6 @@ public class VeiculoServiceTest {
      */
      @Test
     public void testExcluirVeiculo() {
-        Veiculo veiculo = new Veiculo();
-        veiculo.setId(1);
         // Simulate behavior of VeiculoDao.excluir(veiculo)
         doNothing().when(mockVeiculoDao).excluir(veiculo);
         veiculoService.excluir(veiculo);
@@ -65,7 +64,6 @@ public class VeiculoServiceTest {
      */
      @Test
     public void testEditarVeiculo() {
-        Veiculo veiculo = new Veiculo(2 ,"Honda", "Civic", 2021, "XYZ5678", true);
         // Simulate behavior of VeiculoDao.editar(veiculo)
         doNothing().when(mockVeiculoDao).editar(veiculo);
         veiculoService.editar(veiculo);
@@ -78,8 +76,6 @@ public class VeiculoServiceTest {
      */
      @Test
     public void testQuantidadeVeiculoPorMarca() throws SQLException {
-        Veiculo veiculo = new Veiculo();
-        veiculo.setMarca("Ford");
         ResultSet mockResultSet = mock(ResultSet.class);
         when(mockVeiculoDao.quantidadeVeiculoPorMarca(veiculo)).thenReturn(mockResultSet);
         veiculoService.quantidadeVeiculoPorMarca(veiculo);
@@ -92,10 +88,8 @@ public class VeiculoServiceTest {
      */
      @Test
     public void testIsDisponivel() throws SQLException {
-        Veiculo veiculo = new Veiculo();
-        veiculo.setId(3);
         // Simulate behavior of VeiculoDao.isDisponivel(veiculo)
-        when(mockVeiculoDao.isDisponivel(0)).thenReturn(true);
+        when(mockVeiculoDao.isDisponivel(1)).thenReturn(true);
         boolean disponivel = veiculoService.isDisponivel(veiculo.getId());
         // Verify that VeiculoDao.isDisponivel(veiculo) was called exactly once
         verify(mockVeiculoDao, times(1)).isDisponivel(veiculo.getId());
