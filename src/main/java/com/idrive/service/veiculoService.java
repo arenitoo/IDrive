@@ -7,11 +7,11 @@ import com.idrive.models.Veiculo;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class VeiculoService {
+public class veiculoService {
 
     private VeiculoDAO veiculoDao;
 
-    public VeiculoService() {
+    public veiculoService() {
         veiculoDao = new VeiculoDAO();
     }
     

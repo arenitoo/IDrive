@@ -4,7 +4,7 @@
  */
 package com.idrive.service;
 
-import com.idrive.daos.LocacaoDAO;
+import com.idrive.daos.locacaoDAO;
 import com.idrive.models.Locacao;
 import com.idrive.models.Cliente;
 import com.idrive.models.Veiculo;
@@ -22,8 +22,8 @@ import static org.mockito.Mockito.*;
  */
 public class LocacaoServiceTest {
     
-    private LocacaoService locacaoService;
-    private LocacaoDAO mockLocacaoDao;
+    private locacaoService locacaoService;
+    private locacaoDAO mockLocacaoDao;
     private Cliente cliente;
     private Veiculo veiculo;
     private Locacao locacao;
@@ -33,8 +33,8 @@ public class LocacaoServiceTest {
     
     @BeforeEach
     public void setUp() {
-        mockLocacaoDao = mock(LocacaoDAO.class);
-        locacaoService = new LocacaoService();
+        mockLocacaoDao = mock(locacaoDAO.class);
+        locacaoService = new locacaoService();
         locacaoService.setLocacaoDao(mockLocacaoDao); // Injetando o mock
         Date dataInicio = new Date(2024, 6, 1); 
         Date dataTermino = new Date(2024, 6, 8);
@@ -45,7 +45,7 @@ public class LocacaoServiceTest {
     }
 
     /**
-     * Test of inserir method, of class locacaoService.
+     * Teste de inserir método do LocacaoService.
      */
     @Test
     public void testInserirLocacao() {
@@ -55,7 +55,7 @@ public class LocacaoServiceTest {
     }
 
     /**
-     * Test of excluir method, of class locacaoService.
+     * Teste de excluir método do LocacaoService.
      */
     @Test
     public void testExcluirLocacao() {
@@ -65,7 +65,7 @@ public class LocacaoServiceTest {
     }
 
     /**
-     * Test of editar method, of class locacaoService.
+     * Teste de editar método do LocacaoService.
      */
     @Test
     public void testEditarLocacao() {
@@ -75,7 +75,7 @@ public class LocacaoServiceTest {
     }
 
     /**
-     * Test of getClienteByLocacao method, of class locacaoService.
+     * Teste do getClienteByLocacao method, da classe locacaoService.
      */
     @Test
     public void testGetClienteByLocacao() {

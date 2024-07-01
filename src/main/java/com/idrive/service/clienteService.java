@@ -1,20 +1,20 @@
 package com.idrive.service;
 
-import com.idrive.daos.ClienteDAO;
+import com.idrive.daos.clienteDAO;
 import com.idrive.models.Cliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ClienteService {
+public class clienteService {
 
-    private ClienteDAO clienteDao;
+    private clienteDAO clienteDao;
 
-    public ClienteService() {
-        clienteDao = new ClienteDAO();
+    public clienteService() {
+        clienteDao = new clienteDAO();
     }
     
      // Método setter para injetar o mock do ClienteDao
-    public void setClienteDAO(ClienteDAO clienteDao) {
+    public void setClienteDAO(clienteDAO clienteDao) {
         this.clienteDao = clienteDao;
     }
 

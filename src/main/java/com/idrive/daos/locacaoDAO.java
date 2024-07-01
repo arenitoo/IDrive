@@ -7,12 +7,12 @@ import java.sql.Date;
 import com.idrive.models.Locacao;
 import com.idrive.conf.Conexao;
 
-public class LocacaoDAO {
+public class locacaoDAO {
 
     private Conexao conexao;
     private PreparedStatement ps;
 
-    public LocacaoDAO(){
+    public locacaoDAO(){
         conexao = new Conexao();
     }
 

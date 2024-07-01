@@ -1,21 +1,21 @@
 package com.idrive.service;
 
-import com.idrive.daos.LocacaoDAO;
+import com.idrive.daos.locacaoDAO;
 import com.idrive.models.Locacao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LocacaoService {
+public class locacaoService {
 
-    private LocacaoDAO locacaoDao;
+    private locacaoDAO locacaoDao;
 
-    public LocacaoService() {
-        locacaoDao = new LocacaoDAO();
+    public locacaoService() {
+        locacaoDao = new locacaoDAO();
     }
     
     // Método setter para injetar o mock do LocacaoDao
-    public void setLocacaoDao(LocacaoDAO locacaoDAO) {
+    public void setLocacaoDao(locacaoDAO locacaoDAO) {
         this.locacaoDao = locacaoDAO;
     }
 

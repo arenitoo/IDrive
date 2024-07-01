@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
  */
 public class VeiculoServiceTest {
     
-    private VeiculoService veiculoService;
+    private veiculoService veiculoService;
     private VeiculoDAO mockVeiculoDao;
     private Veiculo veiculo;
     
@@ -26,14 +26,14 @@ public class VeiculoServiceTest {
     @BeforeEach
     public void setUp() {
         mockVeiculoDao = mock(VeiculoDAO.class);
-        veiculoService = new VeiculoService();
+        veiculoService = new veiculoService();
         veiculoService.setVeiculoDAO(mockVeiculoDao);
         veiculo = new Veiculo(1, "Toyota", "Corolla", 2022, "ABC1234", true);
 
     }
     
     /**
-     * Test of inserir method, of class VeiculoService.
+     * Teste de inserir método do VeiculoService.
      */
     @Test
     public void testInserirVeiculo() {
@@ -43,7 +43,7 @@ public class VeiculoServiceTest {
     }
 
     /**
-     * Test of excluir method, of class VeiculoService.
+     * Teste de excluir método do VeiculoService.
      */
      @Test
     public void testExcluirVeiculo() {
@@ -53,7 +53,7 @@ public class VeiculoServiceTest {
     }
 
     /**
-     * Test of editar method, of class VeiculoService.
+     * Teste de editar método do VeiculoService.
      */
      @Test
     public void testEditarVeiculo() {
@@ -63,7 +63,7 @@ public class VeiculoServiceTest {
     }
 
     /**
-     * Test of quantidadeVeiculoPorMarca method, of class VeiculoService.
+     * Teste de quantidadeVeiculoPorMarca do VeiculoService.
      */
      @Test
     public void testQuantidadeVeiculoPorMarca() throws SQLException {
@@ -74,7 +74,7 @@ public class VeiculoServiceTest {
     }
 
     /**
-     * Test of isDisponivel method, of class VeiculoService.
+     * Teste de disponibilidadade do VeiculoService.
      */
      @Test
     public void testIsDisponivel() throws SQLException {

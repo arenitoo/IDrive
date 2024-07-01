@@ -1,6 +1,6 @@
 package com.idrive.service;
 
-import com.idrive.daos.ClienteDAO;
+import com.idrive.daos.clienteDAO;
 import com.idrive.models.Cliente;
 import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,8 +12,8 @@ import static org.mockito.Mockito.*;
  */
 public class ClienteServiceTest {
     
-    private ClienteService clienteService;
-    private ClienteDAO mockClienteDao;
+    private clienteService clienteService;
+    private clienteDAO mockClienteDao;
     private Cliente cliente;
     
     public ClienteServiceTest() {
@@ -21,15 +21,15 @@ public class ClienteServiceTest {
         
     @BeforeEach
     public void setUp() {
-        mockClienteDao = mock(ClienteDAO.class);
-        clienteService = new ClienteService();
+        mockClienteDao = mock(clienteDAO.class);
+        clienteService = new clienteService();
         clienteService.setClienteDAO(mockClienteDao); // Injetando o mock
         cliente = new Cliente(1,"MATHEUS EDUARDO", "123.456.789.-10", "9876-5432", "Rua ABC");
 
     }     
 
     /**
-     * Test of inserir method, of class ClienteService.
+     * Teste de inserir método do ClienteService.
      */
     @Test
     public void testInserirCliente() {
@@ -39,7 +39,7 @@ public class ClienteServiceTest {
     }
 
     /**
-     * Test of excluir method, of class ClienteService.
+     * Teste de excluir método do ClienteService.
      */
     @Test
     public void testExcluirCliente() {
@@ -49,7 +49,7 @@ public class ClienteServiceTest {
     }
 
     /**
-     * Test of editar method, of class ClienteService.
+     * Teste de editar método do ClienteService.
      */
     @Test
     public void testEditarCliente() {

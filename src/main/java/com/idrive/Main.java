@@ -1,14 +1,14 @@
 package com.idrive;
 
-import com.idrive.daos.ClienteDAO;
-import com.idrive.daos.LocacaoDAO;
+import com.idrive.daos.clienteDAO;
+import com.idrive.daos.locacaoDAO;
 import com.idrive.daos.VeiculoDAO;
 import com.idrive.models.Cliente;
 import com.idrive.models.Locacao;
 import com.idrive.models.Veiculo;
-import com.idrive.service.ClienteService;
-import com.idrive.service.LocacaoService;
-import com.idrive.service.VeiculoService;
+import com.idrive.service.clienteService;
+import com.idrive.service.locacaoService;
+import com.idrive.service.veiculoService;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,13 +25,13 @@ public class Main {
     private static List<Veiculo> veiculos = new ArrayList<>();
     private static List<Locacao> locacoes = new ArrayList<>();
 
-    private static ClienteService clienteService = new ClienteService();
-    private static VeiculoService veiculoService = new VeiculoService();
-    private static LocacaoService locacaoService = new LocacaoService();
+    private static clienteService clienteService = new clienteService();
+    private static veiculoService veiculoService = new veiculoService();
+    private static locacaoService locacaoService = new locacaoService();
 
-    private static ClienteDAO clienteDAO = new ClienteDAO();
+    private static clienteDAO clienteDAO = new clienteDAO();
     private static VeiculoDAO veiculoDAO = new VeiculoDAO();
-    private static LocacaoDAO locacaoDAO = new LocacaoDAO();
+    private static locacaoDAO locacaoDAO = new locacaoDAO();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -42,7 +42,7 @@ public class Main {
             carregarDados();
             exibirMenuPrincipal();
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer do scanner
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1:
@@ -208,7 +208,7 @@ public class Main {
         System.out.print("Escolha uma opção: ");
 
         int opcao = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer do scanner
+        scanner.nextLine(); 
 
         switch (opcao) {
             case 1:
@@ -318,12 +318,12 @@ public class Main {
 
             System.out.print("Ano: ");
             int ano = scanner.nextInt();
-            scanner.nextLine(); // Limpa o buffer do scanner
+            scanner.nextLine(); 
 
             System.out.print("Placa: ");
             String placa = scanner.nextLine().trim();
 
-            Veiculo novoVeiculo = new Veiculo(0, marca, modelo, ano, placa, true); // Novo veículo sempre disponível
+            Veiculo novoVeiculo = new Veiculo(0, marca, modelo, ano, placa, true);
             veiculoService.inserir(novoVeiculo);
             veiculos.add(novoVeiculo);
 
@@ -341,7 +341,7 @@ public class Main {
         System.out.print("Escolha uma opção: ");
 
         int opcao = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer do scanner
+        scanner.nextLine(); 
 
         switch (opcao) {
             case 1:
@@ -448,7 +448,7 @@ public class Main {
 
         System.out.println("1. Voltar");
         System.out.print("Escolha uma opção: ");
-        scanner.nextLine(); // Limpa o buffer do scanner
+        scanner.nextLine(); 
     }
 
     private static void retornarDadosClienteLocacao() {
@@ -458,7 +458,7 @@ public class Main {
 
         try {
             int indice = scanner.nextInt() - 1;
-            scanner.nextLine(); // Limpa o buffer do scanner
+            scanner.nextLine(); 
 
             if (indice >= 0 && indice < locacoes.size()) {
                 Locacao locacaoSelecionada = locacoes.get(indice);
@@ -479,13 +479,13 @@ public class Main {
 
         try {
             int indice = scanner.nextInt() - 1;
-            scanner.nextLine(); // Limpa o buffer do scanner
+            scanner.nextLine(); 
 
             if (indice >= 0 && indice < veiculos.size()) {
                 Veiculo veiculoSelecionado = veiculos.get(indice);
                 ResultSet resultSet = veiculoService.quantidadeVeiculoPorMarca(veiculoSelecionado);
-                // Aqui você deve processar o ResultSet para obter a quantidade de veículos locados
-                // Como o método quantidadeVeiculoPorMarca está retornando null no momento, adapte conforme necessário
+                // pra processar o ResultSet para obter a quantidade de veículos locados
+                // adaptar o null do quantidadeVeiculoPorMarca
                 System.out.println("Quantidade de veículos locados da marca " + veiculoSelecionado.getMarca() + ": ???");
             } else {
                 System.out.println("Índice inválido. Tente novamente.");
@@ -510,7 +510,7 @@ public class Main {
 
         try {
             int indice = scanner.nextInt() - 1;
-            scanner.nextLine(); // Limpa o buffer do scanner
+            scanner.nextLine(); 
 
             if (indice >= 0 && indice < veiculos.size()) {
                 Veiculo veiculoSelecionado = veiculos.get(indice);
