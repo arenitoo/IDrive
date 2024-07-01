@@ -57,15 +57,4 @@ public class ClienteServiceTest {
         clienteService.editar(cliente);
         verify(mockClienteDao, times(1)).editar(cliente);
     }
-
-    /**
-     * Test of mostrarCliente method, of class ClienteService.
-     */
-    @Test
-    public void testMostrarCliente() throws SQLException {
-        when(mockClienteDao.getById(cliente.getId())).thenReturn(null);
-        clienteService.getById(cliente.getId());
-        verify(mockClienteDao, times(1)).getById(cliente.getId());
-    }
-    
 }

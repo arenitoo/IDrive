@@ -85,5 +85,5 @@ public class VeiculoServiceTest {
         verify(mockVeiculoDao, times(1)).isDisponivel(veiculo.getId(), dataInicio, dataTermino);
         assertEquals(true, disponivel);
     }
-    
+ 
 }
