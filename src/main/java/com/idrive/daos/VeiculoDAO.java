@@ -106,7 +106,7 @@ public class VeiculoDAO {
 
     public boolean isDisponivel(int veiculoId) {
         try {
-            String SQL = "SELECT COUNT(*) FROM locacao WHERE id_veiculo = ?";
+            String SQL = "SELECT COUNT(*) FROM locacao WHERE id_veiculo = ? AND NOW() BETWEEN dataInicio AND dataTermino";
 
             ps = conexao.getConn().prepareStatement(SQL);
             ps.setInt(1, veiculoId);
