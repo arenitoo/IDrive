@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 
 import com.idrive.daos.VeiculoDAO;
 import com.idrive.models.Veiculo;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class VeiculoService {
@@ -56,5 +57,31 @@ public class VeiculoService {
             throw new IllegalArgumentException();
         }
         return veiculoDao.isDisponivel(veiculoId, dataInicio, dataFim);
+    }
+    
+    public Veiculo getById(int id) throws SQLException {
+        if (id <= 0) {
+            return null; // ou lançar uma exceção, dependendo do seu caso
+        }
+
+        ResultSet rs = veiculoDao.getById(id);
+        if (rs.next()) {
+            // Construa o objeto Veiculo com os dados do ResultSet
+            Veiculo veiculo = new Veiculo(
+                rs.getInt("id"),
+                rs.getString("marca"),
+                rs.getString("modelo"),
+                rs.getInt("ano"),
+                rs.getString("placa"),
+                rs.getBoolean("disponibilidade")
+            );
+            // Feche o ResultSet para liberar recursos
+            rs.close();
+
+            return veiculo;
+        } else {
+            rs.close(); // Feche o ResultSet se não houver veículo encontrado
+            return null; // ou lançar uma exceção, dependendo do seu caso
+        }
     }
 }

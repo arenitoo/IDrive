@@ -26,6 +26,13 @@ public class VeiculoDAO {
 
         return null;
     }
+    
+    public ResultSet getById(int id) throws SQLException {
+        String SQL = "SELECT * FROM veiculo WHERE id = ?";
+        ps = conexao.getConn().prepareStatement(SQL);
+        ps.setInt(1, id);
+        return ps.executeQuery();
+    }
 
     public void inserir(Veiculo veiculo){
         try {

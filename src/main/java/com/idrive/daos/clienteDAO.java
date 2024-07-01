@@ -25,6 +25,13 @@ public class ClienteDAO {
         }
         return null;
     }
+    
+    public ResultSet getById(int id) throws SQLException {
+        String SQL = "SELECT * FROM cliente WHERE id = ?";
+        ps = conexao.getConn().prepareStatement(SQL);
+        ps.setInt(1, id);
+        return ps.executeQuery();
+    }
 
     public void inserir(Cliente cliente){
         try {
@@ -83,24 +90,5 @@ public class ClienteDAO {
             ex.printStackTrace();
         }
     }
-
-    public ResultSet mostrarDadosCliente(Cliente cliente) {
-        try {
-            String SQL = "SELECT * FROM cliente WHERE id = ?";
-
-            ps = conexao.getConn().prepareStatement(SQL);
-            ps.setInt(1, cliente.getId());
-
-            ResultSet rs = ps.executeQuery();
-
-            ps.close();
-
-            return rs;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
 
 }

@@ -2,6 +2,7 @@ package com.idrive.service;
 
 import com.idrive.daos.ClienteDAO;
 import com.idrive.models.Cliente;
+import java.sql.SQLException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
@@ -61,10 +62,10 @@ public class ClienteServiceTest {
      * Test of mostrarCliente method, of class ClienteService.
      */
     @Test
-    public void testMostrarCliente() {
-        when(mockClienteDao.mostrarDadosCliente(cliente)).thenReturn(null);
-        clienteService.mostrarCliente(cliente);
-        verify(mockClienteDao, times(1)).mostrarDadosCliente(cliente);
+    public void testMostrarCliente() throws SQLException {
+        when(mockClienteDao.getById(cliente.getId())).thenReturn(null);
+        clienteService.getById(cliente.getId());
+        verify(mockClienteDao, times(1)).getById(cliente.getId());
     }
     
 }

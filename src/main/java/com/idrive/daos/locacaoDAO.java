@@ -26,6 +26,15 @@ public class LocacaoDAO {
 
         return null;
     }
+    
+    public ResultSet getById(int id) throws SQLException {
+            String SQL = "SELECT * FROM locacao WHERE id = ?";
+            ps = conexao.getConn().prepareStatement(SQL);
+            ps.setInt(1, id);
+            return ps.executeQuery();
+        }
+    
+    
 
     public void inserir(Locacao locacao){
         try {

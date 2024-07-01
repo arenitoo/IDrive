@@ -4,6 +4,7 @@ import com.idrive.daos.LocacaoDAO;
 import com.idrive.models.Locacao;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LocacaoService {
 
@@ -46,5 +47,12 @@ public class LocacaoService {
             throw new IllegalArgumentException();
         }
         return locacaoDao.getClienteByLocacao(locacaoId);
+    }
+    
+        public void getById(int id) throws SQLException {
+        if (id <= 0) {
+            return;
+        }
+        locacaoDao.getById(id);
     }
 }
