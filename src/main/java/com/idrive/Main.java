@@ -36,11 +36,10 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        carregarDados(); // Carrega os dados iniciais dos DAOs para as listas locais
-
         boolean sair = false;
 
         while (!sair) {
+            carregarDados();
             exibirMenuPrincipal();
             int opcao = scanner.nextInt();
             scanner.nextLine(); // Limpa o buffer do scanner
